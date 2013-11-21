@@ -71,7 +71,7 @@ static char *ltoa(char *p, long num, unsigned radix) {
   return long_to_string_with_divisor(p, num, radix, 0);
 }
 
-#if CHPRINTF_USE_FLOAT
+#if defined(CHPRINTF_USE_FLOAT)
 static char *ftoa(char *p, double num) {
   long l;
   unsigned long precision = FLOAT_PRECISION;
@@ -111,7 +111,7 @@ void chprintf(BaseSequentialStream *chp, const char *fmt, ...) {
   int i, precision, width;
   bool_t is_long, left_align;
   long l;
-#if CHPRINTF_USE_FLOAT
+#if defined(CHPRINTF_USE_FLOAT)
   float f;
   char tmpbuf[2*MAX_FILLER + 1];
 #else
@@ -204,7 +204,7 @@ void chprintf(BaseSequentialStream *chp, const char *fmt, ...) {
       }
       p = ltoa(p, l, 10);
       break;
-#if CHPRINTF_USE_FLOAT
+#if defined(CHPRINTF_USE_FLOAT)
     case 'f':
       f = (float) va_arg(ap, double);
       if (f < 0) {
